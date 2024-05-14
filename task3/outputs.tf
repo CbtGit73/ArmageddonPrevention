@@ -30,37 +30,34 @@ output "am1_s1" {
   value = google_compute_subnetwork.sub-sg-am1-cbt.name
 }
 output "am1_s1_range" {
-  value = google_compute_subnetwork.sub-sg-am2-cbt.ip_cidr_range
+  value = google_compute_subnetwork.sub-sg-am1-cbt.ip_cidr_range
 }
 output "am1_s1_region" {
-  value = google_compute_subnetwork.sub-sg-am2-cbt.region
+  value = google_compute_subnetwork.sub-sg-am1-cbt.region
 }
 
-output "am2" {
-  value = google_compute_network.damb-am2-vpc.name
-}
 
-output "am2_s2" {
+output "am1_s2" {
   value = google_compute_subnetwork.sub-sg-am2-cbt.name
 }
-output "am2_s2_range" {
+output "am1_s2_range" {
   value = google_compute_subnetwork.sub-sg-am2-cbt.ip_cidr_range
 }
-output "am2_s2_region" {
+output "am1_s2_region" {
   value = google_compute_subnetwork.sub-sg-am2-cbt.region
 }
 
 output "ap" {
-  value = google_compute_network.damb-am2-vpc.name
+  value = google_compute_network.damb-ap-vpc.name
 }
 
 output "n3_s1" {
-  value = google_compute_subnetwork.sub-sg-am2-cbt.name
+  value = google_compute_subnetwork.sub-sg-ap-cbt.name
 }
 output "n3_s1_range" {
-  value = google_compute_subnetwork.sub-sg-am2-cbt.ip_cidr_range
+  value = google_compute_subnetwork.sub-sg-ap-cbt.ip_cidr_range
 }
 output "n3_s1_region" {
-  value = google_compute_subnetwork.sub-sg-am2-cbt.region
+  value = google_compute_subnetwork.sub-sg-ap-cbt.region
 }
 
