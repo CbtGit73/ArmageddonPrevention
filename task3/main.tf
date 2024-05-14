@@ -20,11 +20,20 @@ resource "google_compute_network" "damb-hq-vpc" {
   auto_create_subnetworks = false
 }
 
-resource "google_compute_subnetwork" "sub-sg-hq-cbt" {
-  name                     = "subby-hq-cbt"
+resource "google_compute_subnetwork" "sub-sg-hq-cbt1" {
+  name                     = "subby-hq-cbt1"
   network                  = google_compute_network.damb-hq-vpc.id
   ip_cidr_range            = "10.0.0.0/24"
   region                   = "europe-west4"
+  private_ip_google_access = false
+
+}
+
+resource "google_compute_subnetwork" "sub-sg-hq-cbt2" {
+  name                     = "subby-hq-cbt1"
+  network                  = google_compute_network.damb-hq-vpc.id
+  ip_cidr_range            = "10.132.30.0/24"
+  region                   = "europe-west1"
   private_ip_google_access = false
 
 }
@@ -43,9 +52,9 @@ resource "google_compute_firewall" "damb-hq-vpc-firewall" {
 
 resource "google_compute_instance" "damb-hq-instance" {
   depends_on   = [google_compute_firewall.damb-hq-vpc-firewall]
-  name         = "dont-armageddon-me-bro-instance"
+  name         = "dont-armageddon-me-bro-instance2"
   machine_type = "e2-medium"
-  zone         = "europe-west4-a"
+  zone         = "europe-west1-b"
 
   allow_stopping_for_update = true
 
@@ -78,7 +87,7 @@ cat <<EOF > /var/www/html/index.html
 
   network_interface {
     network    = google_compute_network.damb-hq-vpc.id
-    subnetwork = google_compute_subnetwork.sub-sg-hq-cbt.id
+    subnetwork = google_compute_subnetwork.sub-sg-hq-cbt2.id
     access_config {
       // Ephemeral IP
     }
@@ -90,19 +99,7 @@ cat <<EOF > /var/www/html/index.html
 
   }
 }
-/*
-resource "google_compute_firewall" "instance_http_firewall" {
-  name    = "allow-http"
-  network = google_compute_network.damb-hq-vpc.id
 
-  allow {
-    protocol = "tcp"
-    ports    = ["80"]
-  }
-
-  source_ranges = ["0.0.0.0/0"]
-}
-*/
 resource "google_compute_network" "damb-am1-vpc" {
   name                    = "damb-am1-vpc"
   auto_create_subnetworks = false

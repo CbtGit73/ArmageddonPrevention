@@ -37,10 +37,6 @@ resource "google_compute_firewall" "vpc-firewall" {
   }
 
   allow {
-    protocol = "tcp"
-  }
-
-  allow {
     protocol = "22"
   }
 
@@ -83,7 +79,7 @@ cat <<EOF > /var/www/html/index.html
 <html><body>
 <h2>Don't Armageddon Me Bro!</h2>
 <iframe src="https://giphy.com/embed/nR4L10XlJcSeQ" width="480" height="412" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/no-cat-nR4L10XlJcSeQ">via GIPHY</a></p>
-<h3>A Plea To The Gentle Spirit Buried Inside Of Theo</h3>
+<h3>A Plea To The Gentle Spirit Buried Inside Of Theo WAF</h3>
 </body></html>
     EO
 
@@ -101,18 +97,6 @@ cat <<EOF > /var/www/html/index.html
     scopes = ["cloud-platform"]
 
   }
-}
-
-resource "google_compute_firewall" "instance_http_firewall" {
-  name    = "allow-http"
-  network = google_compute_network.dont-armageddon-me-bro-vpc.id
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80"]
-  }
-
-  source_ranges = ["0.0.0.0/0"]
 }
 
 output "public_ip_address" {
